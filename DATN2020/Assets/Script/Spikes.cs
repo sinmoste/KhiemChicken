@@ -17,7 +17,7 @@ public class Spikes : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            player.Damage(1);// dặm bẫy trừ đi 1hp
+            player.Damage(10);// dặm bẫy trừ đi n hp
             player.Knockback(130f, player.transform.position);//130f thông số nhảy khi chạm bẫy
         }
     }

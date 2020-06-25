@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
 
     //Máu nhân vật
     public int ourHealth;
-    public int maxhealth = 3;
+    public int maxhealth = 100;
+    public int newhealth ;
+    public HealthBar healthBar;
 
     public Rigidbody2D r2;
     public Animator anim;
@@ -29,7 +31,8 @@ public class Player : MonoBehaviour
         r2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         gm = GameObject.FindGameObjectWithTag("Gamemaster").GetComponent<Gamemaster>();
-        ourHealth = maxhealth;
+        newhealth = maxhealth;
+        healthBar.SetMaxHealth(newhealth);
         cherry = gameObject.GetComponent<Cherry>();
         gem = gameObject.GetComponent<Gem>();
     }
@@ -79,11 +82,13 @@ public class Player : MonoBehaviour
         if (h > 0 && !faceright)
         {
             Flip();
+            healthBar.checkScale();
         }
 
         if (h < 0 && faceright)
         {
             Flip();
+            healthBar.checkScale();
         }
         // giảm ma sát(giảm tốc độ)
         if (grounded)
@@ -91,7 +96,7 @@ public class Player : MonoBehaviour
             r2.velocity = new Vector2(r2.velocity.x * 0.9f, r2.velocity.y);
         }
         //máu nhỏ 0 sẽ chết
-        if (ourHealth <= 0)
+        if (newhealth <= 0)
         {
             Death();
         }
@@ -115,8 +120,10 @@ public class Player : MonoBehaviour
     //Start Bẫy chông
     public void Damage(int damage)
     {
-        ourHealth -= damage;
+        newhealth -= damage;
+        healthBar.SetHealth(newhealth); // set lại thanh máu hero
         gameObject.GetComponent<Animation>().Play("redflash");// nháy đỏ khi ng chơi mất hp
+       
 
     }
 

@@ -42,11 +42,13 @@ public class opposumwalker : MonoBehaviour
             {
                 faceright = false;
                 temp.x = -1f;
+                healthBar.checkScale();
             }
             else
             {
                 faceright = true;
                 temp.x = 1f;
+                healthBar.checkScale();
             }
             transform.localScale = temp;
         }
@@ -66,7 +68,7 @@ public class opposumwalker : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            player.Damage(1); //mất 1 máu
+            player.Damage(10); //mất 1 máu
             player.KnockbackOpposum(200f, player.transform.position);
         }
     }
