@@ -89,19 +89,4 @@ public class opposumwalker : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    //test
-    public void knockback()
-    {
-        Vector2 temp = gameObject.transform.position;
-        if (player.faceright == true)
-        {
-            myBody.AddForce(new Vector2(temp.x + 500f, temp.y));
-        }
-        else
-        {
-            myBody.AddForce(new Vector2(temp.x -500f, temp.y));
-        }
-        
-        
-    }
 }
