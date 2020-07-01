@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public int newhealth ;
     public HealthBar healthBar;
 
+    //kiem tra bat tu
+    public bool immortal = false;
+    //
     public Rigidbody2D r2;
     public Animator anim;
 
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ourHealth = 3;
         r2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         gm = GameObject.FindGameObjectWithTag("Gamemaster").GetComponent<Gamemaster>();
@@ -95,10 +99,27 @@ public class Player : MonoBehaviour
         {
             r2.velocity = new Vector2(r2.velocity.x * 0.9f, r2.velocity.y);
         }
-        //máu nhỏ 0 sẽ chết
+        //máu nhỏ 0 sẽ mất 1 mạng
         if (newhealth <= 0)
         {
+            ourHealth -= 1;
+            //phục hồi lại thanh HP
+            newhealth = maxhealth;
+            healthBar.SetMaxHealth(newhealth);
+            StartCoroutine(BatTu2s());
+        }
+        if (ourHealth <= 0)
+        {
             Death();
+        }
+    }
+    public IEnumerator BatTu2s()
+    {
+        if (!immortal)
+        {
+            immortal = true;
+            yield return new WaitForSeconds(2);
+            immortal = false;
         }
     }
 
@@ -120,9 +141,13 @@ public class Player : MonoBehaviour
     //Start Bẫy chông
     public void Damage(int damage)
     {
-        newhealth -= damage;
-        healthBar.SetHealth(newhealth); // set lại thanh máu hero
-        gameObject.GetComponent<Animation>().Play("redflash");// nháy đỏ khi ng chơi mất hp
+        if (immortal != true)
+        {
+            newhealth -= damage;
+            healthBar.SetHealth(newhealth); // set lại thanh máu hero
+            gameObject.GetComponent<Animation>().Play("redflash");// nháy đỏ khi ng chơi mất hp
+        }
+       
        
 
     }
