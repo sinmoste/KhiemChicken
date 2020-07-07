@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
 
     public Rigidbody2D r2;
     public Animator anim;
-
+    //chekcpoint
+    public Vector3 location;
     //Điểm
     public Gamemaster gm;
     public Cherry cherry;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(newhealth);
         cherry = gameObject.GetComponent<Cherry>();
         gem = gameObject.GetComponent<Gem>();
+        location = transform.position;
     }
 
     // Update is called once per frame
@@ -159,6 +161,15 @@ public class Player : MonoBehaviour
             //Destroy(col.gameObject);
             gm.points += 300;
             gem.Boom();
+        }
+        //va chạm
+        if (col.CompareTag("CheckPoint"))
+        {
+            location = col.transform.position;
+        }
+        if (col.CompareTag("landDead"))
+        {
+            transform.position = location;
         }
     }
 

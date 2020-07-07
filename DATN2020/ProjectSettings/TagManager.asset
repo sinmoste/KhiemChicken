@@ -9,6 +9,8 @@ TagManager:
   - Gamemaster
   - Coins
   - CoinsDiamond
+  - CheckPoint
+  - landDead
   layers:
   - Default
   - TransparentFX
